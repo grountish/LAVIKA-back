@@ -10,8 +10,8 @@ cloudinary.config({
 var storage = cloudinaryStorage({
     cloudinary: cloudinary,
     folder: 'folder-name', // The name of the folder in cloudinary
-    allowedFormats: ['wav', 'png', 'jpg', 'jpeg'],
-    params: { resource_type: 'video' },//  =>this is in case you want to upload other type of files, not just images
+    allowedFormats: ['wav', 'vid', 'png', 'jpg', 'jpeg'],
+    params: { resource_type: 'video' },
     filename: function (req, file, cb) {
         cb(null, file.originalname); // The file on cloudinary would have the same  name as the original file name
     }
