@@ -16,7 +16,7 @@ router.get('/', (req, res, next) =>{
 })
 
 // POSTS A NEW SONG
-router.post('/', uploadCloud.single('file'), async (req, res, next) =>{
+router.post('/', async (req, res, next) =>{
     let {name, description, urlPath} = req.body
     let user = req.session.currentUser_id
     try{
@@ -28,6 +28,27 @@ router.post('/', uploadCloud.single('file'), async (req, res, next) =>{
         next(createError(err))
     }
 })
+
+router.post('/file', uploadCloud.single('urlPath'), async (req, res, next) =>{
+    if (!req.file) {
+        next(new Error('No file uploaded!'));
+        return;
+      }
+    //   // get secure_url from the file object and save it in the 
+    //   // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
+    //   res.json({ secure_url: req.file.secure_url });
+      console.log(req.file);
+    try{
+   res
+   .status(200)
+   .json({
+      urlPath: req.file.secure_url
+    })
+    } catch(err) {
+        next(createError(err))
+    }
+})
+
 
 router.delete('/:id', async (req, res, next) =>{
     const id = req.params.id;
