@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) =>{
 })
 
 //ADDS URL TO CLOUDINARY
-router.post('/file', uploadCloud.single('urlPath'), async (req, res, next) =>{
+router.post('/file', uploadCloud.single('urlPath'), async (req, res, next) => {
     if (!req.file) {
         next(new Error('No file uploaded!'));
         return;
@@ -62,4 +62,4 @@ router.delete('/:id', async (req, res, next) =>{
     }
 })
 
-module.exports = router;
+module.exports = router; 
