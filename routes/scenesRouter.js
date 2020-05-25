@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const Song = require('../models/Song');
+const Scene = require('../models/scene');
 const createError = require('http-errors')
 const uploadCloud = require('../config/cloudinary')
 
@@ -16,6 +17,21 @@ router.get('/', (req, res, next) =>{
 })
 
 // POSTS A NEW SONG
+router.post('/save', async (req, res, next) =>{
+    console.log(req.body);
+    let {bpm} = req.body
+    let user = req.session.currentUser._id
+    try{
+   const scene = await Scene.create({bpm})
+  
+   res
+   .status(200)
+   .json(scene)
+    } catch(err) {
+        next(createError(err))
+    }
+})
+
 router.post('/', async (req, res, next) =>{
     let {name, description, urlPath} = req.body
     let user = req.session.currentUser._id
