@@ -16,21 +16,6 @@ router.get('/', (req, res, next) =>{
         .catch(err => next(createError(err)))
 })
 
-// POSTS A NEW SONG
-router.post('/save', async (req, res, next) =>{
-    console.log(req.body);
-    let {bpm} = req.body
-    let user = req.session.currentUser._id
-    try{
-   const scene = await Scene.create({bpm})
-  
-   res
-   .status(200)
-   .json(scene)
-    } catch(err) {
-        next(createError(err))
-    }
-})
 
 router.post('/', async (req, res, next) =>{
     let {name, description, urlPath} = req.body
@@ -51,11 +36,11 @@ router.post('/', async (req, res, next) =>{
 
 //POSTS A NEW SCENE
 router.post('/save', async (req, res, next) =>{
-    console.log(req.body);
-    let {strokeR, strokeG, strokeB} = req.body
+
+    let {strokeR, strokeG, strokeB,patterns, name} = req.body
     let user = req.session.currentUser._id
     try{
-   const scene = await Scene.create({user, strokeR, strokeG, strokeB})
+   const scene = await Scene.create({user, strokeR, strokeG, strokeB,patterns, name})
    await User.findByIdAndUpdate(user, {$push: {scenes: scene._id}})
    res
    .status(200)
