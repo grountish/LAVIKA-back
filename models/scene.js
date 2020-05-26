@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const sceneSchema = new Schema({
-  bpm: {type: Number},
+  user: {type: Schema.Types.ObjectId, ref: 'User'},
+  strokeR: {type: Number},
+  strokeB: {type: Number},
+  strokeG: {type: Number}
   
 }, {
   timestamps: {
