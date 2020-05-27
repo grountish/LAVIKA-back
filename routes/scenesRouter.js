@@ -8,9 +8,10 @@ const Scene = require('../models/scene');
 
 //GETS ALL SONGS FROM ALL USERS
 router.get('/', (req, res, next) => {
-    Song.find()
-        .then(songs => {
-            res.json(songs)
+    Scene.find()
+    .populate('user')
+        .then(Scenes => {
+            res.json(Scenes)
             res.status(200)
         })
         .catch(err => next(createError(err)))
@@ -52,11 +53,11 @@ router.post('/save', async (req, res, next) => {
 
 router.put('/update', async (req, res, next) => {
 
-    let { strokeR, strokeG, strokeB, patterns, sceneId, name, capture, canvas,bpm } = req.body
+    let { strokeR, strokeG, strokeB, patterns, sceneId, name, capture, canvas,bpm,alphaStroke,betaStroke } = req.body
     let user = req.session.currentUser._id
 
     try {
-        const scene = await Scene.findByIdAndUpdate(sceneId, { user,bpm, strokeR, strokeG, strokeB, patterns, name, capture, canvas })
+        const scene = await Scene.findByIdAndUpdate(sceneId, { user,bpm, strokeR, strokeG, strokeB, patterns, name, capture, canvas,alphaStroke,betaStroke })
         res
             .status(200)
             .json(scene)
