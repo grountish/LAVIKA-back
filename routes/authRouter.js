@@ -51,6 +51,7 @@ authRouter.post('/login', isNotLoggedIn, validationLogin, (req, res, next) => {
       //  - check if user exists in the DB
       if (!user) {
         //  - if user doesn't exist - forward the error to the error middleware using `next()`
+        
         return next(createError(404)); // Unathorized
       }
       else {
